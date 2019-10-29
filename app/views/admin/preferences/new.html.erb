@@ -1,0 +1,11 @@
+<%= form_for [:admin, @preference] do |f| %>
+    <%= f.label "Order Songs by ASC or DESC?" %>
+    <%= f.select :song_sort_order, options_for_select(["ASC", "DESC"]) %><br>
+    <%= f.label "Order Artists by ASC or DESC?" %>
+    <%= f.select :artist_sort_order, options_for_select(["ASC", "DESC"]) %><br>
+    <%= f.label "Allow Creation of Songs?" %>
+    <%= f.check_box :allow_create_songs %>
+    <%= f.label "Allow Creation of Artists?" %>
+    <%= f.check_box :allow_create_artists %>
+    <%= f.submit %>
+<% end %>
