@@ -1,6 +1,21 @@
 class ArtistsController < ApplicationController
   def index
-    @artists = Artist.all
+    if Preference.last
+      sort_order = Preference.last.artist_sort_order  
+    end
+
+    if sort_order
+      if sort_order == "ASC"
+        @artists = Artist.order(id: :asc)
+      elsif sort_order == "DESC"
+        @artists = Artist.order(id: :desc)
+      else
+        flash[:alert] = "Invalid sort method!"
+        @artists = Artist.all 
+      end
+    else
+      @artists = Artist.all
+    end
   end
 
   def show

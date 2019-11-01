@@ -1,5 +1,7 @@
 class SongsController < ApplicationController
   def index
+    sort_order = Preference.last.song_sort_order if Preference.last
+
     if params[:artist_id]
       @artist = Artist.find_by(id: params[:artist_id])
       if @artist.nil?
@@ -9,6 +11,14 @@ class SongsController < ApplicationController
       end
     else
       @songs = Song.all
+    end
+
+    if sort_order == "ASC"
+      @songs = @songs.order(id: :asc)
+    elsif sort_order == "DESC"
+      @songs = @songs.order(id: :desc)
+    else
+      flash[:notice] = "Invalid sort order"
     end
   end
 
