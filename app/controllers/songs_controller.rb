@@ -25,8 +25,22 @@ class SongsController < ApplicationController
   end
 
   def new
-    @song = Song.new
+    if !params[:admin_id]
+      redirect_to songs_path
+    else
+      Song.new
+    end
   end
+
+  # Their solution:
+  # def new
+  #   @preference = Preference.first
+  #   if @preference.allow_create_songs
+  #   @song = Song.new
+  #   else
+  #     redirect_to songs_path
+  #   end 
+  # end
 
   def create
     @song = Song.new(song_params)

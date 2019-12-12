@@ -8,8 +8,22 @@ class ArtistsController < ApplicationController
   end
 
   def new
-    @artist = Artist.new
+    if !params[:admin_id]
+      redirect_to artists_path
+    else
+      Artist.new
+    end
   end
+
+  # THEIR SOLUTION:
+  # def new
+  #   @preference = Preference.first
+  #   if @preference.allow_create_artists
+  #     @artist = Artist.new
+  #   else
+  #     redirect_to artists_path
+  #   end
+  # end
 
   def create
     @artist = Artist.new(artist_params)
